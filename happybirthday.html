@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ffb6c9, #ffe4ec, #d9c2ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Georgia', serif;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    color: #c2185b;
+    margin-bottom: 35px;
+    font-size: clamp(28px, 6vw, 42px);
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px white; }
+    to { text-shadow: 0 0 20px #ff4f91; }
+}
+
+/* Envelope */
+
+.envelope {
+    width: 280px;
+    height: 180px;
+    background: #ff5c93;
+    position: relative;
+    margin: auto;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 15px 35px #a33b6b55;
+    transition: transform 1s;
+}
+
+.envelope::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-bottom: 110px solid #ff8aaf;
+    z-index: 3;
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-top: 105px solid #ffbad0;
+    transform-origin: top;
+    transition: transform 0.8s;
+    z-index: 5;
+}
+
+.envelope.open .flap {
+    transform: rotateX(180deg);
+}
+
+.heart {
+    position: absolute;
+    top: 65px;
+    left: 120px;
+    font-size: 40px;
+    z-index: 4;
+    transition: opacity 0.5s;
+}
+
+.envelope.open .heart {
+    opacity: 0;
+}
+
+.open-text {
+    margin-top: 25px;
+    color: #a31554;
+    font-size: 18px;
+}
+
+/* Birthday Letter */
+
+.letter {
+    position: absolute;
+    width: 260px;
+    min-height: 220px;
+    background: #fffaf5;
+    padding: 25px 18px;
+    top: 15px;
+    left: 10px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: all 1s ease;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.envelope.open .letter {
+    transform: translateY(-160px);
+    opacity: 1;
+}
+
+.letter h2 {
+    color: #e91e63;
+    font-size: 24px;
+}
+
+.letter p {
+    margin-top: 12px;
+    color: #75505e;
+    font-size: 15px;
+}
+
+/* Message */
+
+.message {
+    display: none;
+    background: #fff9fc;
+    padding: 30px 22px;
+    border-radius: 20px;
+    max-width: 420px;
+    width: 100%;
+    margin: 25px auto;
+    box-shadow: 0 10px 35px #ad437855;
+    animation: appear 1s ease;
+}
+
+.message h2 {
+    color: #e91e63;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+.message p {
+    line-height: 1.8;
+    color: #694052;
+    font-size: 17px;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: scale(0.5) translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Buttons */
+
+button {
+    border: none;
+    padding: 13px 25px;
+    border-radius: 30px;
+    background: #e91e63;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 25px;
+    box-shadow: 0 5px 15px #e91e6355;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ad1457;
+    transform: scale(1.08);
+}
+
+/* Floating hearts */
+
+.floating {
+    position: fixed;
+    bottom: -50px;
+    animation: floatUp 7s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media(max-width: 400px) {
+    .envelope {
+        transform: scale(0.9);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎂 Happy Birthday! ❤️</h1>
+
+    <div id="cover">
+
+        <div class="envelope" id="envelope"
+             onclick="openEnvelope()">
+
+            <div class="letter">
+                <h2>For You ❤️</h2>
+                <p>A special surprise is waiting...</p>
+            </div>
+
+            <div class="flap"></div>
+            <div class="heart">❤️</div>
+
+        </div>
+
+        <p class="open-text">✨ A little surprise just for you ✨</p>
+
+        <button onclick="openEnvelope()">
+            Open Your Surprise 💌
+        </button>
+
+    </div>
+
+    <div class="message" id="message">
+
+        <h2>🎉 Happy Birthday! 🎉</h2>
+
+        <p>
+            Wishing you a day filled with happiness,
+            laughter, love and beautiful memories. ❤️
+            <br><br>
+
+            May all your dreams come true,
+            may your smile never fade,
+            and may this new year of your life
+            bring endless joy and success.
+            <br><br>
+
+            You deserve all the beautiful things
+            life has to offer.
+            <br><br>
+
+            Keep smiling, keep shining
+            and stay amazing! 🌸
+            <br><br>
+
+            Once again, Happy Birthday! 🎂❤️
+        </p>
+
+        <h2 style="margin-top:20px;">With lots of love ❤️</h2>
+
+        <button onclick="replay()">
+            Replay Animation 🔄
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+let opened = false;
+
+function openEnvelope() {
+
+    if (opened) return;
+
+    opened = true;
+
+    const envelope = document.getElementById("envelope");
+
+    envelope.classList.add("open");
+
+    setTimeout(() => {
+
+        document.getElementById("cover")
+            .classList.add("hidden");
+
+        document.getElementById("message").style.display = "block";
+
+        createConfetti();
+
+    }, 1800);
+}
+    
+function replay() {
+
+    opened = false;
+
+    document.getElementById("message").style.display = "none";
+
+    document.getElementById("cover").classList.remove("hidden");
+
+    document.getElementById("envelope").classList.remove("open");
+}
+
+function createHearts() {
+
+    const heart = document.createElement("div");
+
+    heart.className = "floating";
+
+    heart.innerHTML = ["❤️", "💕", "💖", "🌸", "✨"][Math.floor(Math.random() * 5)];
+
+    heart.style.left = Math.random() * 100 + "vw";
+
+    heart.style.fontSize = (15 + Math.random() * 25) + "px";
+
+    heart.style.animationDuration = (4 + Math.random() * 5) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 9000);
+}
+
+setInterval(createHearts, 400);
+
+function createConfetti() {
+
+    for (let i = 0; i < 80; i++) {
+
+        const item = document.createElement("div");
+
+        item.innerHTML = ["🎊", "✨", "🎉", "💖", "🌸"][Math.floor(Math.random() * 5)];
+
+        item.style.position = "fixed";
+        item.style.left = Math.random() * 100 + "vw";
+        item.style.top = "-30px";
+        item.style.fontSize = "22px";
+        item.style.zIndex = "10";
+        item.style.pointerEvents = "none";
+
+        document.body.appendChild(item);
+
+        const duration = 2000 + Math.random() * 3000;
+
+        item.animate([
+            { transform: "translateY(0) rotate(0deg)", opacity: 1 },
+            { transform: `translateY(${window.innerHeight + 100}px) rotate(720deg)`, opacity: 0 }
+        ], {
+            duration: duration,
+            easing: "ease-in"
+        });
+
+        setTimeout(() => item.remove(), duration);
+    }
+}
+
+</script>
+
+</body>
+</html>
